@@ -1,0 +1,31 @@
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.egg-info/
+.venv/
+venv/
+env/
+
+.ipynb_checkpoints/
+
+.vscode/
+.idea/
+
+.DS_Store
+Thumbs.db
+
+results/tuning/
+models/
+
+data/MADatasets/*.zip
+data/MADatasets/__MACOSX/
+
+# Dataset variants
+data/MADatasets/MADatasets/*1.mat
+# Large/intermediate experiment results
+results/metrics_cv_histories.pkl
+results/resumen_global2.json
+
+*.tmp
+*.log

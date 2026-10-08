@@ -1,0 +1,679 @@
+{
+    "Breast": {
+        "diag": {
+            "best_score": 0.9984485815602837,
+            "metric": "AUC",
+            "trial_id": "129",
+            "hyperparameters": {
+                "n_layers": 1,
+                "units_0": 173,
+                "units_1": 330,
+                "units_2": 281,
+                "Learning_rate": 0.05,
+                "d": 28
+            }
+        },
+        "sym": {
+            "best_score": 0.9978945035460993,
+            "metric": "AUC",
+            "trial_id": "052",
+            "hyperparameters": {
+                "n_layers": 1,
+                "units_0": 400,
+                "units_1": 188,
+                "units_2": 400,
+                "Learning_rate": 0.05,
+                "d": 109
+            }
+        },
+        "full": {
+            "best_score": 0.999113475177305,
+            "metric": "AUC",
+            "trial_id": "00",
+            "hyperparameters": {
+                "n_layers": 1,
+                "units_0": 10,
+                "units_1": 10,
+                "units_2": 10,
+                "batch_size": 8,
+                "Learning_rate": 0.05,
+                "d": 8
+            }
+        }
+    },
+    "Bupa": {
+        "diag": {
+            "best_score": 0.7685703620754012,
+            "metric": "AUC",
+            "trial_id": "193",
+            "hyperparameters": {
+                "n_layers": 1,
+                "units_0": 395,
+                "units_1": 103,
+                "units_2": 297,
+                "Learning_rate": 0.01,
+                "d": 128
+            }
+        },
+        "sym": {
+            "best_score": 0.7629712579320642,
+            "metric": "AUC",
+            "trial_id": "097",
+            "hyperparameters": {
+                "n_layers": 1,
+                "units_0": 258,
+                "units_1": 246,
+                "units_2": 139,
+                "Learning_rate": 0.005,
+                "d": 42
+            }
+        },
+        "full": {
+            "best_score": 0.7528928704740575,
+            "metric": "AUC",
+            "trial_id": "129",
+            "hyperparameters": {
+                "n_layers": 1,
+                "units_0": 510,
+                "units_1": 483,
+                "units_2": 126,
+                "batch_size": 40,
+                "Learning_rate": 0.01,
+                "d": 43
+            }
+        }
+    },
+    "Ionosphere": {
+        "diag": {
+            "best_score": 0.9787946428571429,
+            "metric": "AUC",
+            "trial_id": "139",
+            "hyperparameters": {
+                "n_layers": 3,
+                "units_0": 186,
+                "units_1": 215,
+                "units_2": 313,
+                "Learning_rate": 0.005,
+                "d": 119
+            }
+        },
+        "sym": {
+            "best_score": 0.9787946428571428,
+            "metric": "AUC",
+            "trial_id": "135",
+            "hyperparameters": {
+                "n_layers": 1,
+                "units_0": 368,
+                "units_1": 307,
+                "units_2": 382,
+                "Learning_rate": 0.01,
+                "d": 117
+            }
+        },
+        "full": {
+            "best_score": 0.9676339285714286,
+            "metric": "AUC",
+            "trial_id": "132",
+            "hyperparameters": {
+                "n_layers": 3,
+                "units_0": 567,
+                "units_1": 416,
+                "units_2": 261,
+                "batch_size": 416,
+                "Learning_rate": 0.005,
+                "d": 75
+            }
+        }
+    },
+    "Pima": {
+        "diag": {
+            "best_score": 0.8311111111111111,
+            "metric": "AUC",
+            "trial_id": "025",
+            "hyperparameters": {
+                "n_layers": 2,
+                "units_0": 50,
+                "units_1": 269,
+                "units_2": 355,
+                "Learning_rate": 0.01,
+                "d": 26
+            }
+        },
+        "sym": {
+            "best_score": 0.8255555555555556,
+            "metric": "AUC",
+            "trial_id": "120",
+            "hyperparameters": {
+                "n_layers": 1,
+                "units_0": 25,
+                "units_1": 209,
+                "units_2": 230,
+                "Learning_rate": 0.001,
+                "d": 46
+            }
+        },
+        "full": {
+            "best_score": 0.841111111111111,
+            "metric": "AUC",
+            "trial_id": "192",
+            "hyperparameters": {
+                "n_layers": 1,
+                "units_0": 487,
+                "units_1": 190,
+                "units_2": 82,
+                "batch_size": 40,
+                "Learning_rate": 0.0001,
+                "d": 56
+            }
+        }
+    },
+    "TicTacToe": {
+        "diag": {
+            "best_score": 0.9414638095752145,
+            "metric": "AUC",
+            "trial_id": "087",
+            "hyperparameters": {
+                "n_layers": 3,
+                "units_0": 193,
+                "units_1": 123,
+                "units_2": 29,
+                "Learning_rate": 0.01,
+                "d": 101
+            }
+        },
+        "sym": {
+            "best_score": 0.8876774437307714,
+            "metric": "AUC",
+            "trial_id": "120",
+            "hyperparameters": {
+                "n_layers": 2,
+                "units_0": 105,
+                "units_1": 106,
+                "units_2": 278,
+                "Learning_rate": 0.001,
+                "d": 110
+            }
+        },
+        "full": {
+            "best_score": 0.9562260484698009,
+            "metric": "AUC",
+            "trial_id": "111",
+            "hyperparameters": {
+                "n_layers": 2,
+                "units_0": 282,
+                "units_1": 280,
+                "units_2": 249,
+                "batch_size": 224,
+                "Learning_rate": 0.0001,
+                "d": 26
+            }
+        }
+    },
+    "Occupancy": {
+        "diag": {
+            "best_score": 0.9952784778863125,
+            "metric": "AUC",
+            "trial_id": "013",
+            "hyperparameters": {
+                "n_layers": 1,
+                "units_0": 377,
+                "units_1": 270,
+                "units_2": 277,
+                "Learning_rate": 0.005,
+                "d": 85
+            }
+        },
+        "sym": {
+            "best_score": 0.99769040060509,
+            "metric": "AUC",
+            "trial_id": "134",
+            "hyperparameters": {
+                "n_layers": 3,
+                "units_0": 162,
+                "units_1": 79,
+                "units_2": 378,
+                "Learning_rate": 0.005,
+                "d": 39
+            }
+        },
+        "full": {
+            "best_score": 0.9964688908767172,
+            "metric": "AUC",
+            "trial_id": "110",
+            "hyperparameters": {
+                "n_layers": 2,
+                "units_0": 276,
+                "units_1": 278,
+                "units_2": 80,
+                "batch_size": 368,
+                "Learning_rate": 0.0001,
+                "d": 56
+            }
+        }
+    },
+    "Skin_NonSkin": {
+        "diag": {
+            "best_score": 0.9952358833285567,
+            "metric": "AUC",
+            "trial_id": "090",
+            "hyperparameters": {
+                "n_layers": 2,
+                "units_0": 122,
+                "units_1": 247,
+                "units_2": 223,
+                "Learning_rate": 0.05,
+                "d": 49
+            }
+        },
+        "sym": {
+            "best_score": 0.9779491159473837,
+            "metric": "AUC",
+            "trial_id": "004",
+            "hyperparameters": {
+                "n_layers": 1,
+                "units_0": 388,
+                "units_1": 342,
+                "units_2": 183,
+                "Learning_rate": 0.0005,
+                "d": 115
+            }
+        },
+        "full": {
+            "best_score": 0.9984101471507079,
+            "metric": "AUC",
+            "trial_id": "002",
+            "hyperparameters": {
+                "n_layers": 1,
+                "units_0": 416,
+                "units_1": 508,
+                "units_2": 380,
+                "batch_size": 360,
+                "Learning_rate": 0.05,
+                "d": 33
+            }
+        }
+    },
+    "Iris": {
+        "diag": {
+            "best_score": 1.0,
+            "metric": "AUC",
+            "trial_id": "007",
+            "hyperparameters": {
+                "n_layers": 2,
+                "units_0": 41,
+                "units_1": 265,
+                "units_2": 34,
+                "Learning_rate": 0.05,
+                "d": 41
+            }
+        },
+        "sym": {
+            "best_score": 1.0,
+            "metric": "AUC",
+            "trial_id": "003",
+            "hyperparameters": {
+                "n_layers": 1,
+                "units_0": 45,
+                "units_1": 382,
+                "units_2": 159,
+                "Learning_rate": 0.05,
+                "d": 102
+            }
+        },
+        "full": {
+            "best_score": 1.0,
+            "metric": "AUC",
+            "trial_id": "045",
+            "hyperparameters": {
+                "n_layers": 3,
+                "units_0": 175,
+                "units_1": 266,
+                "units_2": 159,
+                "batch_size": 56,
+                "Learning_rate": 0.05,
+                "d": 56
+            }
+        }
+    },
+    "Wine": {
+        "diag": {
+            "best_score": 1.0,
+            "metric": "AUC",
+            "trial_id": "090",
+            "hyperparameters": {
+                "n_layers": 2,
+                "units_0": 143,
+                "units_1": 127,
+                "units_2": 309,
+                "Learning_rate": 0.005,
+                "d": 8
+            }
+        },
+        "sym": {
+            "best_score": 1.0,
+            "metric": "AUC",
+            "trial_id": "020",
+            "hyperparameters": {
+                "n_layers": 2,
+                "units_0": 341,
+                "units_1": 241,
+                "units_2": 400,
+                "Learning_rate": 0.01,
+                "d": 32
+            }
+        },
+        "full": {
+            "best_score": 1.0,
+            "metric": "AUC",
+            "trial_id": "022",
+            "hyperparameters": {
+                "n_layers": 2,
+                "units_0": 512,
+                "units_1": 281,
+                "units_2": 265,
+                "batch_size": 208,
+                "Learning_rate": 0.005,
+                "d": 24
+            }
+        }
+    },
+    "Segmentation": {
+        "diag": {
+            "best_score": 0.997313081947735,
+            "metric": "AUC",
+            "trial_id": "024",
+            "hyperparameters": {
+                "n_layers": 2,
+                "units_0": 272,
+                "units_1": 369,
+                "units_2": 261,
+                "Learning_rate": 0.01,
+                "d": 58
+            }
+        },
+        "sym": {
+            "best_score": 0.9974642958813043,
+            "metric": "AUC",
+            "trial_id": "080",
+            "hyperparameters": {
+                "n_layers": 3,
+                "units_0": 400,
+                "units_1": 400,
+                "units_2": 400,
+                "Learning_rate": 0.001,
+                "d": 128
+            }
+        },
+        "full": {
+            "best_score": 0.9981694334445725,
+            "metric": "AUC",
+            "trial_id": "004",
+            "hyperparameters": {
+                "n_layers": 1,
+                "units_0": 34,
+                "units_1": 590,
+                "units_2": 532,
+                "batch_size": 176,
+                "Learning_rate": 0.05,
+                "d": 125
+            }
+        }
+    },
+    "Western": {
+        "diag": {
+            "best_score": 0.9165679547173665,
+            "metric": "AUC",
+            "trial_id": "031",
+            "hyperparameters": {
+                "n_layers": 3,
+                "units_0": 388,
+                "units_1": 336,
+                "units_2": 342,
+                "Learning_rate": 0.005,
+                "d": 128
+            }
+        },
+        "sym": {
+            "best_score": 0.9164654162212523,
+            "metric": "AUC",
+            "trial_id": "087",
+            "hyperparameters": {
+                "n_layers": 2,
+                "units_0": 186,
+                "units_1": 213,
+                "units_2": 400,
+                "Learning_rate": 0.005,
+                "d": 93
+            }
+        },
+        "full": {
+            "best_score": 0.907863018447293,
+            "metric": "AUC",
+            "trial_id": "023",
+            "hyperparameters": {
+                "n_layers": 3,
+                "units_0": 508,
+                "units_1": 182,
+                "units_2": 600,
+                "batch_size": 512,
+                "Learning_rate": 0.001,
+                "d": 47
+            }
+        }
+    },
+    "YG": {
+        "diag": {
+            "best_score": 0.9775,
+            "metric": "AUC",
+            "trial_id": "093",
+            "hyperparameters": {
+                "n_layers": 2,
+                "units_0": 163,
+                "units_1": 282,
+                "units_2": 213,
+                "Learning_rate": 5e-05,
+                "d": 79
+            }
+        },
+        "sym": {
+            "best_score": 0.97125,
+            "metric": "AUC",
+            "trial_id": "132",
+            "hyperparameters": {
+                "n_layers": 3,
+                "units_0": 320,
+                "units_1": 210,
+                "units_2": 307,
+                "Learning_rate": 0.01,
+                "d": 79
+            }
+        },
+        "full": {
+            "best_score": 0.98375,
+            "metric": "AUC",
+            "trial_id": "059",
+            "hyperparameters": {
+                "n_layers": 3,
+                "units_0": 361,
+                "units_1": 583,
+                "units_2": 310,
+                "batch_size": 384,
+                "Learning_rate": 0.0005,
+                "d": 18
+            }
+        }
+    },
+    "YB": {
+        "diag": {
+            "best_score": 0.9600000000000001,
+            "metric": "AUC",
+            "trial_id": "144",
+            "hyperparameters": {
+                "n_layers": 3,
+                "units_0": 338,
+                "units_1": 273,
+                "units_2": 123,
+                "Learning_rate": 0.01,
+                "d": 107
+            }
+        },
+        "sym": {
+            "best_score": 0.9650000000000001,
+            "metric": "AUC",
+            "trial_id": "121",
+            "hyperparameters": {
+                "n_layers": 1,
+                "units_0": 201,
+                "units_1": 65,
+                "units_2": 200,
+                "Learning_rate": 0.0001,
+                "d": 105
+            }
+        },
+        "full": {
+            "best_score": 0.98375,
+            "metric": "AUC",
+            "trial_id": "016",
+            "hyperparameters": {
+                "n_layers": 2,
+                "units_0": 138,
+                "units_1": 212,
+                "units_2": 100,
+                "batch_size": 336,
+                "Learning_rate": 0.05,
+                "d": 118
+            }
+        }
+    },
+    "YR": {
+        "diag": {
+            "best_score": 0.9924999999999999,
+            "metric": "AUC",
+            "trial_id": "190",
+            "hyperparameters": {
+                "n_layers": 3,
+                "units_0": 235,
+                "units_1": 303,
+                "units_2": 400,
+                "Learning_rate": 0.05,
+                "d": 49
+            }
+        },
+        "sym": {
+            "best_score": 0.98,
+            "metric": "AUC",
+            "trial_id": "160",
+            "hyperparameters": {
+                "n_layers": 3,
+                "units_0": 255,
+                "units_1": 371,
+                "units_2": 146,
+                "Learning_rate": 0.005,
+                "d": 50
+            }
+        },
+        "full": {
+            "best_score": 0.98375,
+            "metric": "AUC",
+            "trial_id": "084",
+            "hyperparameters": {
+                "n_layers": 3,
+                "units_0": 196,
+                "units_1": 507,
+                "units_2": 173,
+                "batch_size": 304,
+                "Learning_rate": 0.05,
+                "d": 29
+            }
+        }
+    },
+    "Music": {
+        "diag": {
+            "best_score": 0.9384281935241482,
+            "metric": "AUC",
+            "trial_id": "0534",
+            "hyperparameters": {
+                "n_layers": 2,
+                "units_0": 600,
+                "units_1": 343,
+                "units_2": 600,
+                "batch_size": 240,
+                "Learning_rate": 0.001,
+                "d": 114,
+                "l2_lambda": 1e-05
+            }
+        },
+        "sym": {
+            "best_score": 0.9242631186711963,
+            "metric": "AUC",
+            "trial_id": "075",
+            "hyperparameters": {
+                "n_layers": 1,
+                "units_0": 479,
+                "units_1": 79,
+                "units_2": 600,
+                "batch_size": 40,
+                "Learning_rate": 0.0005,
+                "d": 71
+            }
+        },
+        "full": {
+            "best_score": 0.9258125737579803,
+            "metric": "AUC",
+            "trial_id": "094",
+            "hyperparameters": {
+                "n_layers": 1,
+                "units_0": 600,
+                "units_1": 10,
+                "units_2": 291,
+                "batch_size": 512,
+                "Learning_rate": 0.005,
+                "d": 97
+            }
+        }
+    },
+    "Polarity": {
+        "diag": {
+            "best_score": 0.7996022824466655,
+            "metric": "AUC",
+            "trial_id": "023",
+            "hyperparameters": {
+                "n_layers": 1,
+                "units_0": 400,
+                "units_1": 206,
+                "units_2": 400,
+                "Learning_rate": 0.01,
+                "batch_size": 512,
+                "d": 45
+            }
+        },
+        "sym": {
+            "best_score": 0.7931202126590802,
+            "metric": "AUC",
+            "trial_id": "099",
+            "hyperparameters": {
+                "n_layers": 1,
+                "units_0": 204,
+                "units_1": 261,
+                "units_2": 191,
+                "Learning_rate": 0.005,
+                "batch_size": 424,
+                "d": 10
+            }
+        },
+        "full": {
+            "best_score": 0.7823107668162775,
+            "metric": "AUC",
+            "trial_id": "026",
+            "hyperparameters": {
+                "n_layers": 2,
+                "units_0": 48,
+                "units_1": 281,
+                "units_2": 114,
+                "batch_size": 264,
+                "Learning_rate": 0.0005,
+                "d": 42
+            }
+        }
+    }
+}
