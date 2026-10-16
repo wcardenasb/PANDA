@@ -89,7 +89,7 @@ def train_em(
                 y_true = Z_va.numpy().argmax(axis=1)
 
                 # ===== Alinear etiquetas =====
-                cm = confusion_matrix(y_true, y_pred)
+                cm = confusion_matrix(y_true, y_pred, labels=np.arange(K))
                 row_ind, col_ind = linear_sum_assignment(-cm)
                 mapping = {col: row for row, col in zip(row_ind, col_ind)}
                 y_pred_aligned = np.vectorize(mapping.get)(y_pred)
@@ -146,7 +146,7 @@ def train_em(
                 y_true = Z_va.numpy().argmax(axis=1)
 
                 # ===== Alinear etiquetas =====
-                cm = confusion_matrix(y_true, y_pred)
+                cm = confusion_matrix(y_true, y_pred, labels=np.arange(K))
                 row_ind, col_ind = linear_sum_assignment(-cm)
                 mapping = {col: row for row, col in zip(row_ind, col_ind)}
                 y_pred_aligned = np.vectorize(mapping.get)(y_pred)
@@ -216,7 +216,7 @@ def train_em(
                 y_true = Z_va.numpy().argmax(axis=1)
 
                 # ===== Alinear etiquetas =====
-                cm = confusion_matrix(y_true, y_pred)
+                cm = confusion_matrix(y_true, y_pred, labels=np.arange(K))
                 row_ind, col_ind = linear_sum_assignment(-cm)
                 mapping = {col: row for row, col in zip(row_ind, col_ind)}
                 y_pred_aligned = np.vectorize(mapping.get)(y_pred)
