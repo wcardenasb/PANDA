@@ -27,5 +27,17 @@ data/MADatasets/MADatasets/*1.mat
 results/metrics_cv_histories.pkl
 results/resumen_global2.json
 
+# Intermediate experimental results
+/results/confidence_recovery/*.csv
+/results/confidence_recovery/plots/
+/results/confidence_recovery/plots_individual_pdf/
+
+/results/histories/
+/results/histories2/
+
+/results/*.pkl
+/results/metrics_cv_histories_prueba.csv
+/results/timing/timing_folds_em_breakdown.csv
+
 *.tmp
 *.log
