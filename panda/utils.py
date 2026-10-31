@@ -50,8 +50,9 @@ def init_full_from_symmetric(full_model, sym_model, x_tr, K, clip=1e-4):
         np.fill_diagonal(G[t], -np.log(p_diag[t]))
     full_model.Gamma.assign(G)
 
-def simular_etiquetadores(X, y, T=3, cluster="kmeans", seed=42, p_errors=0.0):
-    # np.random.seed(seed)
+
+def simular_etiquetadores(X, y, T=3, cluster="kmeans", seed=42, p_errors=0.0, return_clusters=False):
+    rng = np.random.default_rng(seed)
 
     # Clustering para asignar expertise
     if cluster == "kmeans":
@@ -66,13 +67,13 @@ def simular_etiquetadores(X, y, T=3, cluster="kmeans", seed=42, p_errors=0.0):
     clases_unicas = np.unique(y)
     K = len(clases_unicas)
     N = X.shape[0]
-    M = np.ones((N,T))
+    M = np.ones((N, T))
     y = y.ravel()
     Z = tf.one_hot(y, depth=K).numpy()
-    
-    y_labelers = np.full((len(X), T), None, dtype=object)  # usar None en vez de np.nan
 
-    for i in range(T): 
+    y_labelers = np.full((N, T), None, dtype=object)
+
+    for i in range(T):
         is_expert = clusters == i
         not_expert = ~is_expert
 
@@ -81,10 +82,19 @@ def simular_etiquetadores(X, y, T=3, cluster="kmeans", seed=42, p_errors=0.0):
 
         if p_errors > 0.0:
             n_errors = int(p_errors * np.sum(not_expert))
-            error_indices = np.random.choice(np.where(not_expert)[0], size=n_errors, replace=False)
+            error_indices = rng.choice(
+                np.where(not_expert)[0], size=n_errors, replace=False
+            )
+
             for idx in error_indices:
-                clases_posibles = [c for c in clases_unicas if c != y[idx]]
-                y_labelers[idx, i] = int(np.random.choice(clases_posibles))
+                clases_posibles = clases_unicas[clases_unicas != y[idx]]
+                y_labelers[idx, i] = int(rng.choice(clases_posibles))
 
     assert None not in y_labelers, "Hay etiquetas sin asignar"
-    return tf.one_hot(y_labelers, depth=K).numpy(), M, Z
+
+    Y = tf.one_hot(y_labelers, depth=K).numpy()
+
+    if return_clusters:
+        return Y, M, Z, clusters
+
+    return Y, M, Z
