@@ -14,11 +14,11 @@ real_db_binary = ['Voice', 'Polarity']
 real_db_multi = ['Music']
 synthetic_db = ['blobs', 'circles', 'spirals']
 
-# data_bases = nonreal_db_binary + nonreal_db_multi + real_db_binary + real_db_multi + synthetic_db
+data_bases = nonreal_db_binary + nonreal_db_multi + real_db_binary + real_db_multi + synthetic_db
 # eta_model = ['sym', 'diag', 'full']
 
-data_bases = ['Breast']
-eta_model = ['sym']
+# data_bases = ['Breast']
+eta_model =['sym', 'diag', 'full']
 
 simulated_db = nonreal_db_binary + nonreal_db_multi
 
@@ -92,7 +92,7 @@ for db in data_bases:
                         model, acc, auc, f1, history, history_val = train_em(
                             train=train_fold, val=val_data, input_dim=input_dim, K=K, T=T, d=d,
                             lr=lr, eta_type='symmetric', n_layers=n_layers, nn_list=nn_list,
-                            em_iters=25, m_steps=20
+                            em_iters=25, m_steps=10
                         )
 
                     elif eta == 'diag':
@@ -100,7 +100,7 @@ for db in data_bases:
                         model, acc, auc, f1, history, history_val = train_em(
                             train=train_fold, val=val_data, input_dim=input_dim, K=K, T=T, d=d,
                             lr=lr, eta_type='diagonal', n_layers=n_layers, nn_list=nn_list,
-                            em_iters=25, m_steps=20
+                            em_iters=25, m_steps=10
                         )
 
                     else:
@@ -110,7 +110,7 @@ for db in data_bases:
                         model, acc, auc, f1, history, history_val = train_em(
                             train=train_fold, val=val_data, input_dim=input_dim, K=K, T=T, d=d,
                             lr=lr, eta_type='full', batch_size=batch_size,
-                            n_layers=n_layers, nn_list=nn_list, em_iters=15, m_steps=15
+                            n_layers=n_layers, nn_list=nn_list, em_iters=15, m_steps=10
                         )
 
                     acc_list.append(acc)
@@ -142,6 +142,9 @@ df_resultados = pd.DataFrame(rows)
 
 output_path = os.path.join(results_path, "metrics_cv_histories.pkl")
 df_resultados.to_pickle(output_path)
+
+# output_path = os.path.join(results_path, "metrics_cv_histories_prueba.csv")
+# df_resultados.to_csv(output_path)
 
 print(f"\nResultados guardados en:\n{output_path}")
 print("\n=== VALIDACIÓN CRUZADA FINALIZADA ===")
