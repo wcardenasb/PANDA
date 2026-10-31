@@ -226,7 +226,7 @@ If you use PANDA in your research, please cite the associated manuscript:
 ```bibtex
 @misc{cardenasbedoya_panda,
   title  = {Probabilistic Annotator-aware Nonlinear Deep Approach for Multi-class Learning},
-  author = {C{\'a}rdenas-Bedoya, Wilfor and C{\'a}rdenas-Pe{\~n}a, David and Gil-Gonzalez, Julián },
+  author = {C{\'a}rdenas-Bedoya, Wilfor, C{\'a}rdenas-Pe{\~n}a, David and Gil-Gonzalez, Julián },
   url    = {https://github.com/wcardenasb/PANDA}
 }
 ```
