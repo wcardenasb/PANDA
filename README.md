@@ -218,15 +218,21 @@ Per-fold timing files, training-history pickles, generated figures, and other in
 - The timing and history experiments are separate instrumented procedures; their metrics and loss logs should not be assumed interchangeable without checking the individual script settings.
 - Published aggregate CSVs document previous experimental runs; successful import or compilation of the code alone does not establish exact numerical reproducibility.
 
-## Citation and code availability
 
-This repository accompanies the manuscript:
+## Citation
 
-> *Probabilistic Annotator-aware Nonlinear Deep Approach for Multi-class Learning.*
+If you use PANDA in your research, please cite the associated manuscript:
 
-The manuscript's final bibliographic citation will be added after publication. Until then, please cite the repository URL when referring specifically to the implementation:
+```bibtex
+@misc{cardenasbedoya_panda,
+  title  = {Probabilistic Annotator-aware Nonlinear Deep Approach for Multi-class Learning},
+  author = {C{\'a}rdenas-Bedoya, Wilfor and C{\'a}rdenas-Pe{\~n}a, David and Gil-Gonzalez, Julián },
+  url    = {https://github.com/wcardenasb/PANDA}
+}
+```
 
-**Code:** https://github.com/wcardenasb/PANDA
+The bibliographic information will be updated once the manuscript is published.
+
 
 ## License
 
