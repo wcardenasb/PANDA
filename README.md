@@ -1,247 +1,109 @@
 # PANDA
 
-**PANDA (Probabilistic Annotator-aware Nonlinear Deep Approach)** is a unified probabilistic framework for classification with multiple annotators. The framework combines deep learning with an Expectation-Maximization (EM)-based learning procedure to model the latent class distribution and the behavior of multiple annotators.
+**PANDA (Probabilistic Annotator-aware Nonlinear Deep Approach)** is a probabilistic deep-learning framework for multiclass classification from labels provided by multiple annotators. It combines a neural-network classifier with an Expectation-Maximization (EM) training procedure to jointly model latent class probabilities and annotator behavior.
 
-PANDA includes three annotator models with different levels of flexibility:
+PANDA supports three annotator-model parameterizations:
 
-- **PANDA-S**: symmetric annotator model.
-- **PANDA-D**: diagonal annotator model.
-- **PANDA-F**: full annotator model.
+- **PANDA-S** (`eta_type="symmetric"`): symmetric annotator model.
+- **PANDA-D** (`eta_type="diagonal"`): diagonal annotator model.
+- **PANDA-F** (`eta_type="full"`): full annotator model, initialized through a symmetric warm-start stage.
 
-The three variants are implemented within the same model and selected through the `eta_type` parameter.
+The three variants share the `MultiAnnotatorEM` implementation and can be selected through the `eta_type` argument.
 
 ## Repository structure
 
 ```text
 PANDA/
 ├── panda/
-│   ├── panda.py
-│   ├── training.py
-│   └── utils.py
-│
+│   ├── panda.py                     # MultiAnnotatorEM model
+│   ├── training.py                  # Main EM training procedure
+│   ├── training_timing.py           # Instrumented EM timing procedure
+│   └── utils.py                     # Annotator simulation and initialization
 ├── experiments/
-│   ├── data_loader.py
-│   ├── hyperparameter_tuning.py
-│   ├── cross_validation.py
-│   └── build_summary.py
-│
+│   ├── data_loader.py               # Unified dataset loading
+│   ├── hyperparameter_tuning.py     # Bayesian hyperparameter search
+│   ├── build_summary.py             # Aggregate tuning results
+│   ├── cross_validation.py          # Evaluation across training folds
+│   ├── confidence_recovery.py       # Annotator-confidence experiments
+│   ├── plot_confidence.py           # Confidence heatmaps
+│   ├── timing_em.py                 # E-step / M-step timing experiments
+│   ├── histories_training.py        # Training and validation histories
+│   └── export_histories_normalized.py # Normalize and aggregate histories
 ├── data/
-│   └── MADatasets/
-│
-├── models/
-│
+│   └── MADatasets/                  # Dataset files (see below)
 ├── results/
-│   └── resumen_global.json
-│
-├── notebooks/
+│   ├── resumen_global.json          # Selected hyperparameters
+│   ├── histories_normalized_tikz.csv
+│   ├── confidence_recovery/
+│   │   └── confidence_recovery_summary_0.5_es.csv
+│   └── timing/
+│       └── timing_summary_em_breakdown.csv
 ├── requirements.txt
 ├── .gitignore
 ├── LICENSE
-├── README.md
-└── test_data_loader.py
+└── README.md
 ```
 
-## Main components
-
-### `panda/`
-
-Contains the core implementation of the PANDA framework.
-
-- `panda.py`: implementation of the `MultiAnnotatorEM` model.
-- `training.py`: EM training procedure and neural network backbone.
-- `utils.py`: auxiliary functions for evaluation, annotator simulation and model initialization.
-
-### `experiments/`
-
-Contains the experimental pipeline.
-
-- `data_loader.py`: unified loading and preprocessing of the datasets.
-- `hyperparameter_tuning.py`: hyperparameter optimization using Keras Tuner.
-- `build_summary.py`: identifies the best trial for each dataset and PANDA variant and generates `results/resumen_global.json`.
-- `cross_validation.py`: evaluates the models using the hyperparameters selected during tuning.
+The tree highlights the main files needed for the reported experiments; other supporting files or directories may also be present.
 
 ## Installation
 
-The required Python dependencies are listed in `requirements.txt`.
-
-Install them with:
+Clone the repository and install the Python dependencies:
 
 ```bash
-pip install -r requirements.txt
+git clone https://github.com/wcardenasb/PANDA.git
+cd PANDA
+python -m pip install -r requirements.txt
 ```
 
-## Datasets
+Run the commands below **from the repository root**. Python 3.10 was used for the local development workflow; compatible TensorFlow and dependency versions depend on the operating system and hardware.
 
-The experiments use datasets from the MADatasets collection, including binary, multiclass, real-world and synthetic datasets.
+## Datasets and loading
 
-The datasets used by the experimental pipeline are:
+The experimental pipeline supports datasets from the `MADatasets` collection, including binary, multiclass, and datasets with simulated annotators. Configured dataset names include:
 
 ```text
-Breast
-Bupa
-Ionosphere
-Pima
-TicTacToe
-Occupancy
-Skin_NonSkin
-Iris
-Wine
-Segmentation
-Western
-Voice
-Polarity
-Music
-blobs
-circles
-spirals
+Breast, Bupa, Ionosphere, Pima, TicTacToe, Occupancy, Skin_NonSkin,
+Iris, Wine, Segmentation, Western, Voice, Polarity, Music,
+blobs, circles, spirals
 ```
 
-The datasets are expected to be located under:
+Dataset files are expected in:
 
 ```text
 data/MADatasets/MADatasets/
 ```
 
-## Loading datasets
-
-All datasets are loaded through the unified interface implemented in `data_loader.py`.
-
-Example:
+Make sure the `.mat` files required by your experiment are available at that location. Listing a dataset here does not imply that its raw file is distributed with this repository.
 
 ```python
+from pathlib import Path
 from experiments.data_loader import load_dataset
 
-base_path = r"C:\path\to\PANDA\data\MADatasets\MADatasets"
+base_path = Path("data/MADatasets/MADatasets")
+datasets = load_dataset("Breast", str(base_path), seed=42, p_errors=0.3)
+dataset = datasets[0]
 
-datasets = load_dataset("Breast", base_path)
+train_data = dataset["train_data"]
+val_data = dataset["val_data"]
+input_dim = dataset["input_dim"]
+K = dataset["K"]
+T = dataset["T"]
 ```
 
-Each dataset is returned using a common structure containing:
-
-- training data
-- validation data
-- input dimensionality
-- number of classes
-- number of annotators
-
-The training data follow the structure:
+Each training or validation tuple has the form:
 
 ```python
-(x_train, Y_train, M_train, Z_train)
+(x, Y, M, Z)
 ```
 
-where:
+where `x` contains input features, `Y` contains annotator-label indicators, `M` is the observation mask, and `Z` contains reference labels used for model assessment. Additional metadata, including sample indices and simulated annotator clusters when applicable, is returned by the loader.
 
-- `x_train`: input samples.
-- `Y_train`: annotator labels.
-- `M_train`: annotation mask.
-- `Z_train`: reference labels used for evaluation.
+**Note on fixed-split datasets:** For datasets that provide separate training/test sets but no test-time annotator labels, the loader constructs placeholder validation annotation tensors to match the common interface. Accordingly, annotation-based validation Q-loss on those datasets should not be interpreted as an observed-label validation loss; evaluation using reference-label metrics is distinct from this diagnostic.
 
-## Hyperparameter tuning
+## PANDA training
 
-Hyperparameter optimization is performed using **Keras Tuner** with Bayesian optimization.
-
-The tuner searches over:
-
-- number of neural network layers
-- number of units per layer
-- latent representation dimension `d`
-- learning rate
-- batch size
-
-Detailed tuning results are organized by PANDA variant:
-
-```text
-results/
-└── tuning/
-    ├── sym/
-    ├── diag/
-    └── full/
-```
-
-The tuning directories contain the trial histories and can become large. They are therefore excluded from version control through `.gitignore`.
-
-## Building the global summary
-
-After hyperparameter tuning, `build_summary.py` identifies the best trial for each dataset and PANDA variant and combines the results into a single JSON file.
-
-Run:
-
-```bash
-python -m experiments.build_summary
-```
-
-This generates:
-
-```text
-results/resumen_global.json
-```
-
-The global summary contains:
-
-- best AUC score
-- best trial identifier
-- selected hyperparameters
-
-The resulting JSON file is used by the cross-validation experiment.
-
-## Cross-validation
-
-The selected hyperparameters are used in the cross-validation experiments implemented in `cross_validation.py`.
-
-Run:
-
-```bash
-python -m experiments.cross_validation
-```
-
-The experimental protocol first performs a train-validation split. The training portion is then divided into five stratified folds.
-
-For each fold:
-
-1. A new PANDA model is initialized.
-2. The model is trained using the selected hyperparameters.
-3. The model is evaluated on the fixed external validation set.
-
-The reported metrics are:
-
-- **ACC**: Accuracy.
-- **AUC**: Area Under the ROC Curve.
-- **F1**: F1-score.
-
-The complete cross-validation results are saved locally as:
-
-```text
-results/metrics_cv_histories.pkl
-```
-
-This file is excluded from version control because it can contain large experiment histories.
-
-## PANDA variants
-
-The three PANDA variants are selected through the `eta_type` parameter.
-
-For PANDA-S:
-
-```python
-eta_type="symmetric"
-```
-
-For PANDA-D:
-
-```python
-eta_type="diagonal"
-```
-
-For PANDA-F:
-
-```python
-eta_type="full"
-```
-
-## Example
-
-A PANDA model can be trained through the `train_em` function:
+The standard training entry point is `panda.training.train_em`:
 
 ```python
 from panda.training import train_em
@@ -252,39 +114,120 @@ model, acc, auc, f1, history, val_history = train_em(
     input_dim=input_dim,
     K=K,
     T=T,
-    d=d,
-    eta_type="symmetric"
+    d=16,
+    eta_type="symmetric",  # "symmetric", "diagonal", or "full"
 )
 ```
 
-## Reproducibility
+`train_em` returns the trained model, validation accuracy, ROC AUC, F1-score, and the recorded training and validation loss histories. The implementation selects/restores the best weights using validation AUC and supports `min_em_iters`, `patience`, and `min_delta` for early stopping. The histories track the EM auxiliary objective (`q_loss`), while optional L2 weight decay is applied during optimization. PANDA-F first runs a symmetric initialization phase.
 
-The experiments use fixed random seeds for dataset splitting and annotator simulation.
+## Hyperparameter optimization
 
-The selected hyperparameters used in the experiments are provided in:
+`experiments/hyperparameter_tuning.py` uses **Keras Tuner Bayesian optimization** to select model settings, including network depth, layer widths, latent dimension `d`, learning rate, and batch size.
+
+Trial artifacts are organized under `results/tuning/` and are excluded from version control because of their size.
+
+After tuning, aggregate the selected trials with:
+
+```bash
+python -m experiments.build_summary
+```
+
+The resulting configuration file is:
 
 ```text
 results/resumen_global.json
 ```
 
-The source code required to reproduce the hyperparameter tuning and cross-validation procedures is provided in the `experiments/` directory.
+A version of this JSON file is included in the repository so that experiments can use the selected hyperparameters without rerunning the full search.
 
-## Citation
+## Evaluation experiments
 
-If you use PANDA in your research, please cite the associated paper.
+### Cross-validation protocol
 
-```bibtex
-@article{cardenasprobabilistic,
-  title={Probabilistic Annotator-aware Nonlinear Deep Approach for Multi-class Learning},
-  author={C{\'a}rdenas-Bedoya, Wilfor and Cardenas Pe{\~n}a, David Augusto and others},
-  journal={...}
-}
+```bash
+python -m experiments.cross_validation
 ```
 
-Citation information will be updated with the final publication details.
+For datasets with an internally generated split, the pipeline first creates an external training/validation partition. It then constructs **five stratified subsets of the training partition**. A new model is trained on each subset and evaluated against the **same fixed external validation set**. This is not the conventional five-fold protocol in which a different fold becomes the test set on each iteration.
+
+Reported metrics include accuracy (**ACC**), area under the ROC curve (**AUC**), and **F1-score**. The full local experiment histories may be stored in `results/metrics_cv_histories.pkl`; such intermediate files are not committed.
+
+### Annotator-confidence recovery
+
+```bash
+python -m experiments.confidence_recovery
+python -m experiments.plot_confidence
+```
+
+These scripts evaluate estimated annotator confidence in datasets with simulated annotator expertise and generate confidence matrices/heatmaps. The published summary for an induced-error setting of `p_errors=0.5` is:
+
+```text
+results/confidence_recovery/confidence_recovery_summary_0.5_es.csv
+```
+
+The error-rate setting and selected datasets can be adjusted in the experiment script.
+
+### Computational cost of E- and M-steps
+
+```bash
+python -m experiments.timing_em
+```
+
+`panda/training_timing.py` instruments EM execution with `time.perf_counter()` to record total and mean E-step/M-step times and the remaining execution time. PANDA-F measurements include its symmetric warm-start phase. The committed aggregate timing results are in:
+
+```text
+results/timing/timing_summary_em_breakdown.csv
+```
+
+Measurements depend on hardware, TensorFlow execution, and experiment settings; they should not be treated as hardware-independent benchmarks.
+
+### Training and validation histories
+
+```bash
+python -m experiments.histories_training
+python -m experiments.export_histories_normalized
+```
+
+The first script records per-M-epoch training and validation histories across datasets and PANDA variants. The export script normalizes each fold's loss by its initial value, interpolates its relative training progress onto 101 points, and reports fold-level means and standard deviations:
+
+```text
+results/histories_normalized_tikz.csv
+```
+
+**Historical-results note:** The export script reads the historical local file `results/metrics_cv_histories_training2.pkl`. This filename is retained for compatibility with the previously generated figures; it does **not** imply that `panda/training2.py` remains part of the codebase. The current `panda/training.py` uses a revised loss-logging convention, so rerunning the histories can produce curves that differ from the committed historical summary. To export newly generated histories, update the `INPUT` path in `export_histories_normalized.py` to match the output of the new run.
+
+## Results included in Git
+
+Only compact, manuscript-related outputs are committed:
+
+| File | Content |
+| --- | --- |
+| `results/resumen_global.json` | Selected hyperparameter settings |
+| `results/histories_normalized_tikz.csv` | Normalized training and validation curves |
+| `results/timing/timing_summary_em_breakdown.csv` | Aggregate E/M timing measurements |
+| `results/confidence_recovery/confidence_recovery_summary_0.5_es.csv` | Annotator-confidence summary |
+
+Per-fold timing files, training-history pickles, generated figures, and other intermediate outputs are intentionally excluded. All generated results should be interpreted in conjunction with the configuration and protocol used to obtain them.
+
+## Reproducibility notes
+
+- Dataset splitting and annotator simulation use fixed seeds where specified in the experimental scripts; other sources of nondeterminism may remain, especially in TensorFlow execution.
+- Experiment scripts should be run from the repository root and require the dataset files to be available locally.
+- `results/resumen_global.json` stores the selected tuning configurations.
+- The timing and history experiments are separate instrumented procedures; their metrics and loss logs should not be assumed interchangeable without checking the individual script settings.
+- Published aggregate CSVs document previous experimental runs; successful import or compilation of the code alone does not establish exact numerical reproducibility.
+
+## Citation and code availability
+
+This repository accompanies the manuscript:
+
+> *Probabilistic Annotator-aware Nonlinear Deep Approach for Multi-class Learning.*
+
+The manuscript's final bibliographic citation will be added after publication. Until then, please cite the repository URL when referring specifically to the implementation:
+
+**Code:** https://github.com/wcardenasb/PANDA
 
 ## License
 
-This project is released under the MIT License.
-
-See the `LICENSE` file for details.
+This project is released under the MIT License. See the [LICENSE](LICENSE) file for details.
